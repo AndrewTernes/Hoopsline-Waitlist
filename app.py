@@ -164,7 +164,7 @@ def waitlist_send_code():
     ok, err = send_verification_code(phone, code)
     if not ok:
         logger.warning(f'Waitlist verification SMS failed for {phone[:6]}***: {err}')
-        return jsonify({'success': False, 'error': f'Could not send SMS: {err}'}), 500
+        return jsonify({'success': False, 'error': 'Oops, that didn\'t work. Please try again in a moment.'}), 500
 
     return jsonify({'success': True, 'phone_hint': _mask_phone(phone)})
 
@@ -196,7 +196,8 @@ def waitlist_resend_code():
 
     ok, err = send_verification_code(pending['phone'], code)
     if not ok:
-        return jsonify({'success': False, 'error': f'Could not send SMS: {err}'}), 500
+        logger.warning(f'Waitlist resend SMS failed for {pending["phone"][:6]}***: {err}')
+        return jsonify({'success': False, 'error': 'Oops, that didn\'t work. Please try again in a moment.'}), 500
     return jsonify({'success': True})
 
 
