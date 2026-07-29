@@ -59,8 +59,14 @@ def _send_template(to_phone: str, template_id: str, variables: dict) -> tuple[bo
                      payload.get('meta', {}).get('request_id'), to_phone)
         return True, ''
     except requests.RequestException as e:
-        _logger.error('Sent.dm send failed: %s', e)
-        return False, str(e)
+        detail = str(e)
+        if e.response is not None:
+            try:
+                detail = f'{e.response.status_code} {e.response.text}'
+            except Exception:
+                pass
+        _logger.error('Sent.dm send failed: %s', detail)
+        return False, detail
     except Exception as e:
         _logger.exception('Unexpected error sending SMS via Sent.dm')
         return False, str(e)
