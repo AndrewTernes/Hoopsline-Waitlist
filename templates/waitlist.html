@@ -834,6 +834,12 @@
           throw new Error(data.error || 'Unable to submit your request.');
         }
 
+        if (data.skip_verification) {
+          localStorage.setItem('hoopsline_signed_up', 'true');
+          setWaitlistSuccess();
+          return;
+        }
+
         var codeIntro = document.getElementById('code-intro');
         if (codeIntro && data.phone_hint) {
           codeIntro.textContent = 'Enter the six-digit code sent to ' + data.phone_hint + '.';

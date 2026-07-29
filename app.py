@@ -60,12 +60,41 @@ limiter = Limiter(
 
 csrf = CSRFProtect(app)
 
+# Temporary kill switch while Sent.dm is unreachable — set SKIP_PHONE_VERIFICATION=1
+# in Vercel env vars to accept waitlist signups without sending/checking an SMS
+# code. Phones collected this way are unverified; unset (or remove) this once
+# Sent.dm access is restored.
+SKIP_PHONE_VERIFICATION = os.environ.get('SKIP_PHONE_VERIFICATION', '').lower() in ('1', 'true')
+if SKIP_PHONE_VERIFICATION:
+    logger.warning('[STARTUP] SKIP_PHONE_VERIFICATION is on — waitlist signups will not be phone-verified.')
+
 
 def _mask_phone(phone: str) -> str:
     """Return a display-safe version like +1 ***-***-7890."""
     if len(phone) >= 10:
         return f'+1 ***-***-{phone[-4:]}'
     return '***'
+
+
+def _insert_waitlist_row(first_name, last_name, email, phone, birthday):
+    """Insert a waitlist signup. Returns (ok, already_exists, error_message)."""
+    from supabase_client import get_supabase_admin
+    sb = get_supabase_admin()
+    try:
+        sb.table('waitlist').insert({
+            'first_name': first_name,
+            'last_name':  last_name,
+            'email':      email,
+            'phone':      phone,
+            'birthday':   birthday,
+        }).execute()
+        return True, False, ''
+    except Exception as insert_error:
+        error_msg = str(insert_error).lower()
+        if 'unique constraint' in error_msg or 'duplicate' in error_msg:
+            return True, True, ''
+        logger.error('waitlist insert error: %s', insert_error)
+        return False, False, str(insert_error)
 
 
 @app.route('/')
@@ -131,6 +160,12 @@ def waitlist_send_code():
             return jsonify({'success': False, 'error': 'You must be 18 years of age or older to join the waitlist.'}), 400
     except ValueError:
         return jsonify({'success': False, 'error': 'Invalid date of birth.'}), 400
+
+    if SKIP_PHONE_VERIFICATION:
+        ok, already_exists, _err = _insert_waitlist_row(first_name, last_name, email, phone, birthday)
+        if not ok:
+            return jsonify({'success': False, 'error': 'Oops, that didn\'t work. Please try again in a moment.'}), 500
+        return jsonify({'success': True, 'already_exists': already_exists, 'skip_verification': True})
 
     now = datetime.now(timezone.utc)
     pending = session.get('waitlist_pending')
@@ -239,31 +274,16 @@ def waitlist_verify_code():
         remaining = max(0, 5 - pending['attempts'])
         return jsonify({'success': False, 'error': f'Incorrect code. {remaining} attempt(s) remaining.'}), 400
 
-    try:
-        from supabase_client import get_supabase_admin
-        sb = get_supabase_admin()
-        already_exists = False
-        try:
-            sb.table('waitlist').insert({
-                'first_name': pending['first_name'],
-                'last_name':  pending['last_name'],
-                'email':      pending['email'],
-                'phone':      pending['phone'],
-                'birthday':   pending['birthday'],
-            }).execute()
-        except Exception as insert_error:
-            error_msg = str(insert_error).lower()
-            if 'unique constraint' in error_msg or 'duplicate' in error_msg:
-                already_exists = True
-            else:
-                raise
-
-        session.pop('waitlist_pending', None)
-        session.modified = True
-        return jsonify({'success': True, 'already_exists': already_exists})
-    except Exception as e:
-        logger.error('waitlist_verify_code insert error: %s', e)
+    ok, already_exists, _err = _insert_waitlist_row(
+        pending['first_name'], pending['last_name'], pending['email'],
+        pending['phone'], pending['birthday'],
+    )
+    if not ok:
         return jsonify({'success': False, 'error': 'Unable to complete your signup right now. Please try again.'}), 500
+
+    session.pop('waitlist_pending', None)
+    session.modified = True
+    return jsonify({'success': True, 'already_exists': already_exists})
 
 
 if __name__ == '__main__':
