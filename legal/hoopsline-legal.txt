@@ -1,0 +1,510 @@
+HOOPSLINE PRIVACY POLICY
+Effective Date: July 29, 2026
+Last Updated: July 29, 2026
+This Privacy Policy explains how Hoopsline (“Hoopsline,” “we,” “us,” or “our”), an Oregon business operating in the United States, collects, uses, discloses, retains, and protects personal information when you access or use the Hoopsline website, progressive web application, accounts, subscriptions, basketball analytics, predictions, player-prop tools, notifications, support services, and related features collectively referred to as the “Service.”
+Hoopsline is intended only for individuals who are at least eighteen years old. You may not create an account or use the Service if you are under eighteen.
+Hoopsline is the controller of the personal information described in this Privacy Policy unless otherwise stated.
+This Privacy Policy does not apply to third-party websites, applications, sportsbooks, or services that may be linked to or displayed through the Service. Those parties maintain their own privacy practices.
+Where consent is required by law, we will request it separately. Your use of the Service does not constitute consent for processing that legally requires a separate affirmative choice.
+1. Information We Collect
+Information You Provide
+Depending on how you use Hoopsline, we may collect:
+Your first and last name.
+Email address.
+Telephone number.
+Date of birth or age-confirmation information.
+Username and account identifiers.
+Authentication and account-security information.
+Profile photograph or avatar.
+Favorite team, timezone, language, theme, notification settings, and other preferences.
+Subscription plan, billing status, renewal date, transaction history, and payment-related metadata.
+Teams, players, opponents, statistics, lines, matchups, and other information submitted for analysis.
+Prediction history, saved selections, feedback, and accuracy responses.
+Support requests, bug reports, feature requests, replies, and other communications.
+Information submitted when joining a waitlist, promotion, survey, or early-access program.
+Marketing and communications preferences.
+Passwords and payment-card information are processed through specialized service providers. Hoopsline does not intend to receive or store plaintext passwords, complete payment-card numbers, or card security codes.
+Please do not provide government identification numbers, financial-account credentials, medical information, precise geolocation, or other highly sensitive information through support messages or other free-form fields.
+Information Collected Automatically
+When you use the Service, we may automatically collect:
+IP address.
+Browser, device, and operating-system information.
+Device or session identifiers.
+Referring page and approximate geographic area derived from an IP address.
+Pages, features, buttons, and content accessed.
+Dates and times of access.
+Searches, prediction requests, and feature interactions.
+Subscription usage and quota information.
+Error reports, diagnostic information, performance data, and security logs.
+Cookie, local-storage, service-worker, and cache information.
+Push-notification subscription tokens and delivery status.
+Language, timezone, theme, and accessibility preferences.
+We do not collect precise device location unless we clearly request permission for a feature that requires it.
+Information From Other Sources
+We may receive information from:
+Authentication and database-hosting providers.
+Payment processors.
+Email, text-message, and push-notification providers.
+Sports-data, scheduling, roster, injury, news, statistics, and market-data providers.
+Security, fraud-prevention, infrastructure, and performance-monitoring providers.
+Publicly available sources.
+Referral or promotional partners, when applicable.
+Sports information concerning professional or collegiate athletes is used to operate Hoopsline’s basketball-analysis features. It generally is not treated as personal information belonging to a Hoopsline user.
+2. How We Use Information
+We may use personal information to:
+Create, authenticate, maintain, and secure accounts.
+Verify that users satisfy the eighteen-and-older eligibility requirement.
+Deliver game predictions, player-prop analysis, confidence scores, historical information, and supporting factors.
+Process user-selected teams, players, opponents, statistics, and lines.
+Maintain prediction history, preferences, quotas, subscriptions, and account features.
+Process payments and administer subscriptions.
+Send verification codes, password resets, security notices, receipts, service updates, and requested notifications.
+Respond to support requests and resolve technical problems.
+Detect fraud, abuse, unauthorized access, scraping, account sharing, or violations of our Terms of Service.
+Monitor performance, diagnose errors, and maintain Service availability.
+Measure feature usage and improve usability.
+Test, evaluate, calibrate, and improve our analytical systems and prediction models.
+Develop features and conduct internal research.
+Create aggregated or de-identified statistics.
+Communicate about promotions or new features when permitted by law and consistent with your preferences.
+Enforce our agreements and protect Hoopsline, its users, and others.
+Comply with legal, tax, accounting, regulatory, and law-enforcement obligations.
+Support a merger, financing, acquisition, reorganization, or sale of assets.
+We may use aggregated or de-identified information for lawful purposes. We will not attempt to reidentify such information except when reasonably necessary to test our de-identification methods, protect the Service, or comply with law.
+3. Legal Bases for Processing
+Where applicable law requires a legal basis, we rely on:
+Contract: Processing necessary to create your account, provide requested analyses, administer subscriptions, and deliver the Service.
+Legitimate interests: Protecting the Service, preventing fraud, maintaining reliability, understanding feature usage, improving Hoopsline, and communicating with users where those interests are not overridden by your rights.
+Consent: Optional marketing communications, nonessential cookies, push notifications, or other processing for which consent is required.
+Legal obligations: Tax, accounting, regulatory, consumer-protection, security, and lawful disclosure requirements.
+Protection of rights: Establishing, exercising, or defending legal claims and protecting users or others from harm.
+You may withdraw consent at any time by contacting Contact@hoopsline.com. Withdrawal does not affect processing already completed or processing supported by another lawful basis.
+4. How We Disclose Information
+We may disclose personal information to the following categories of recipients.
+Service Providers
+Vendors that provide authentication, database hosting, cloud hosting, payment processing, communications, analytics, customer support, security, error monitoring, and infrastructure services.
+These providers may process information only for contracted purposes and subject to applicable safeguards.
+Sports and Content Providers
+Providers that help supply schedules, rosters, player information, statistics, injuries, market information, and related content.
+We disclose only the technical information reasonably necessary to request or deliver that content.
+Professional Advisers
+Attorneys, accountants, auditors, insurers, financial institutions, and other professional advisers when reasonably necessary.
+Legal and Safety Recipients
+Courts, regulators, law-enforcement agencies, government authorities, or other parties when we reasonably believe disclosure is required by law or necessary to protect rights, safety, security, users, or the public.
+Corporate Transactions
+A prospective or actual buyer, investor, lender, successor, or transaction adviser in connection with a merger, acquisition, financing, restructuring, bankruptcy, or sale of some or all of Hoopsline’s business or assets.
+At Your Direction
+Other parties when you request the disclosure or provide legally valid consent.
+5. No Sale of Personal Information
+Hoopsline does not sell personal information for money.
+Hoopsline does not share personal information for cross-context behavioral advertising or targeted advertising as those terms are defined under applicable privacy laws.
+Hoopsline does not use or disclose sensitive personal information to infer characteristics about users.
+If these practices change, we will update this Privacy Policy, provide legally required notices, and make applicable opt-out controls available before beginning the new practice.
+6. Cookies, Local Storage, and Similar Technologies
+Hoopsline may use:
+Strictly necessary cookies for authentication, security, sessions, load balancing, and fraud prevention.
+Local storage for theme, language, navigation, and interface preferences.
+Service-worker caches for performance and offline functionality.
+Functional technologies for notifications and account settings.
+Performance technologies to understand errors, page speed, and aggregate feature usage.
+Analytics technologies, if enabled, to understand how users interact with the Service.
+You may control cookies through your browser. Blocking necessary technologies may prevent account sign-in or other Service features from working properly.
+Where required, we will request consent before using nonessential cookies or similar technologies.
+Because Hoopsline does not sell personal information or share it for behavioral advertising, we do not currently offer a separate sale-or-sharing opt-out. Where legally required, we recognize qualifying browser-based opt-out preference signals.
+7. Communications
+Hoopsline may send transactional communications relating to:
+Account verification.
+Password resets.
+Sign-in or security events.
+Subscription status and receipts.
+Service outages or material changes.
+Support requests.
+Notifications you request.
+Transactional communications may be necessary to operate your account and may not include an unsubscribe option.
+Marketing emails will include an unsubscribe method. You may also update eligible communication preferences through your account or by emailing Contact@hoopsline.com.
+Hoopsline will send marketing text messages only after obtaining any consent required by law. Consent to marketing texts is not a condition of purchase. Message and data rates may apply. You may revoke marketing-text consent by replying STOP or emailing Contact@hoopsline.com.
+Push notifications can be disabled through your device or browser settings.
+8. Automated Processing and Predictions
+Hoopsline uses statistical models and automated systems to analyze basketball teams, players, schedules, historical performance, matchup information, and user-entered lines.
+These systems generate sports-analysis outputs. They do not make employment, credit, housing, insurance, educational, healthcare, or other decisions that produce legal or similarly significant effects concerning users.
+Prediction requests, feature interactions, and feedback may be evaluated to measure performance and improve Hoopsline.
+Where applicable law grants rights relating to profiling or automated processing, you may exercise those rights by emailing Contact@hoopsline.com.
+9. Data Retention
+Hoopsline retains information only for as long as reasonably necessary for the purposes described in this Privacy Policy, including:
+Account and profile information while your account remains active.
+Prediction history and preferences until deleted, anonymized, or no longer needed.
+Subscription and transaction records as required for billing, accounting, tax, fraud-prevention, and legal purposes.
+Support communications for the time reasonably necessary to resolve issues and maintain appropriate records.
+Security and diagnostic logs for a limited period based on operational and security needs.
+Consent and preference records for as long as necessary to demonstrate compliance.
+Information involved in disputes, investigations, or legal claims until the matter is resolved.
+After an account-deletion request, we will delete or de-identify information unless retention is reasonably necessary for legal obligations, security, fraud prevention, dispute resolution, payment records, or enforcement.
+Residual information may remain temporarily in protected backups until those backups are overwritten through normal retention cycles.
+10. Security
+Hoopsline uses reasonable administrative, technical, and organizational safeguards designed to protect personal information.
+These safeguards may include access controls, encryption in transit, authentication protections, rate limiting, logging, vendor controls, and restricted administrative access.
+No system can guarantee absolute security. You are responsible for protecting your credentials, using a unique password, signing out of shared devices, and promptly notifying us of suspected unauthorized access.
+Report a suspected security issue to Contact@hoopsline.com.
+11. Your Privacy Rights
+Depending on your location, you may have the right to:
+Confirm whether we process your personal information.
+Access or receive a copy of your personal information.
+Correct inaccurate personal information.
+Delete personal information.
+Receive eligible information in a portable format.
+Restrict or object to certain processing.
+Withdraw consent.
+Opt out of targeted advertising, sale, or qualifying sharing.
+Limit certain uses of sensitive personal information.
+Receive information about categories or specific third parties that received personal information where required by law.
+Appeal a denied privacy request.
+Lodge a complaint with an appropriate regulator.
+Receive equal service and pricing without unlawful discrimination for exercising privacy rights.
+You can update certain information through your profile or account settings.
+To submit a privacy request, email Contact@hoopsline.com with “Privacy Request” in the subject line.
+We may verify your identity before completing a request. Verification may require matching information associated with your account.
+We will use verification information only for identity confirmation, security, fraud prevention, and legal compliance.
+You may use an authorized agent where permitted by law. We may require proof of the agent’s authority and may ask you to verify your identity directly.
+If we deny a request, you may appeal by emailing Contact@hoopsline.com with “Privacy Appeal” in the subject line.
+12. Oregon Privacy Rights
+Hoopsline operates in Oregon, United States.
+Where the Oregon Consumer Privacy Act applies, Oregon residents may have the right to:
+Confirm whether Hoopsline is processing their personal data.
+Access their personal data.
+Receive a list of qualifying third parties that received personal data.
+Correct inaccurate personal data.
+Delete personal data, including certain derived data.
+Receive a portable copy of personal data.
+Opt out of the sale of personal data.
+Opt out of targeted advertising.
+Opt out of profiling used to make decisions that produce legal or similarly significant effects.
+Appeal a decision denying a privacy request.
+Exercise their rights without unlawful discrimination.
+Hoopsline does not sell personal data, use personal data for targeted advertising, or profile users to make decisions producing legal or similarly significant effects.
+Oregon privacy requests and appeals may be sent to Contact@hoopsline.com.
+We will respond within the period required by applicable law. If additional time is reasonably necessary, we will provide notice as required.
+If an Oregon privacy appeal is denied, you may submit a complaint to the Oregon Department of Justice.
+13. Other U.S. State Privacy Disclosures
+This section applies only to the extent Hoopsline is subject to an applicable state privacy law.
+During the preceding twelve months, Hoopsline may have collected the following categories of personal information:
+Identifiers
+Examples include name, username, email address, phone number, account ID, IP address, device identifiers, and session identifiers.
+Account Information
+Examples include contact details, date of birth, profile information, authentication information, and subscription details.
+Commercial Information
+Examples include subscription plan, purchase history, renewal status, and transaction metadata.
+Internet or Electronic Network Activity
+Examples include page activity, feature interactions, prediction requests, access logs, cookies, errors, and diagnostic information.
+Approximate Geolocation
+Approximate location may be inferred from an IP address or timezone provided by the user.
+Preferences and Inferences
+Examples include favorite team, selected statistics, theme, language, notification settings, and patterns derived from feature activity.
+Sensitive Personal Information
+Authentication credentials may qualify as sensitive personal information under applicable law. Credentials are processed for account access and security and are not used to infer personal characteristics.
+Hoopsline does not sell these categories or share them for cross-context behavioral advertising.
+Hoopsline does not provide financial incentives in exchange for personal information.
+14. International Privacy Rights
+If you are located in the European Economic Area, United Kingdom, Switzerland, or another jurisdiction with applicable privacy rights, you may have the right to:
+Access your personal information.
+Correct inaccurate information.
+Request erasure.
+Restrict processing.
+Object to processing based on legitimate interests.
+Object to direct marketing.
+Receive eligible information in a portable format.
+Withdraw consent.
+Lodge a complaint with your local data-protection authority.
+Hoopsline operates from Oregon, United States. Personal information may be processed in the United States and other countries where our service providers operate.
+Where required, we use legally recognized transfer safeguards.
+Contact Contact@hoopsline.com to exercise applicable rights or request information regarding international data transfers.
+15. Age Requirement and Children’s Privacy
+You must be at least eighteen years old to create a Hoopsline account or use the Service.
+Hoopsline is not intended or designed for children or minors.
+We do not knowingly collect personal information from anyone under eighteen.
+If we discover that an individual under eighteen has created an account or submitted personal information, we may suspend the account and take reasonable steps to delete the information.
+A parent or legal guardian who believes a minor has provided personal information to Hoopsline should email Contact@hoopsline.com with “Minor Privacy Request” in the subject line.
+16. Third-Party Services and Links
+The Service may display content from or link to third-party services.
+Hoopsline does not control the privacy practices, security, accuracy, availability, or content of third parties. Review the applicable third party’s privacy policy before submitting information or using its services.
+17. Changes to This Privacy Policy
+We may update this Privacy Policy to reflect changes in the Service, law, technology, or business practices.
+We will update the “Last Updated” date and provide additional notice when required.
+Material changes may be communicated through the Service, by email, or through another appropriate method.
+18. Contact Us
+Privacy questions, requests, and appeals may be sent to:
+Hoopsline
+Oregon, United States
+Contact@hoopsline.com
+HOOPSLINE TERMS OF SERVICE
+Effective Date: July 29, 2026
+Last Updated: July 29, 2026
+These Terms of Service (“Terms”) form a legally binding agreement between you and Hoopsline (“Hoopsline,” “we,” “us,” or “our”), an Oregon business operating in the United States, concerning your access to and use of the Hoopsline website, progressive web application, accounts, subscriptions, basketball analytics, predictions, player-prop tools, notifications, support services, and related features collectively referred to as the “Service.”
+You must be at least eighteen years old to create an account or use Hoopsline.
+By creating an account, purchasing a subscription, or accessing the Service, you confirm that you are at least eighteen and agree to these Terms and the Hoopsline Privacy Policy.
+If you are under eighteen or do not agree to these Terms, you may not use the Service.
+1. Eligibility
+To use Hoopsline, you must:
+Be at least eighteen years old.
+Have reached the age of majority in your jurisdiction.
+Be legally capable of entering a binding agreement.
+Use the Service only where permitted by law.
+Meet any higher legal-age requirement applicable to sports wagering if you independently choose to use a third-party wagering service.
+The Service is not available to anyone previously suspended or permanently removed by Hoopsline unless we provide written authorization.
+If you use Hoopsline for an organization, you represent that you have authority to bind that organization. In that situation, “you” includes the organization.
+We may request age or identity verification when reasonably necessary. We may suspend or terminate an account if we reasonably believe the user is under eighteen or provided false eligibility information.
+2. What Hoopsline Provides
+Hoopsline provides informational basketball analysis that may include:
+NBA and NCAA matchup analysis.
+Player-stat projections.
+User-entered player-prop analysis.
+Over-or-under recommendations.
+Confidence scores.
+Recent-performance and opponent context.
+Schedule, roster, injury, statistics, news, and market-related information.
+Prediction history and performance information.
+Notifications and account features.
+Features may vary by plan, league, location, season, data availability, and product version.
+3. Hoopsline Is Not a Sportsbook
+HOOPSLINE DOES NOT ACCEPT, PLACE, TRANSMIT, OR SETTLE WAGERS. HOOPSLINE IS NOT A SPORTSBOOK, CASINO, BROKER, FINANCIAL ADVISER, OR GAMBLING OPERATOR.
+The Service is provided solely for informational, analytical, and entertainment purposes.
+Predictions, projections, confidence scores, recommendations, explanations, and historical statistics are estimates. They are not guarantees of future performance or outcomes.
+Basketball outcomes can be affected by injuries, lineup changes, coaching decisions, limited samples, reporting errors, schedule changes, market movement, and unpredictable events.
+You remain solely responsible for your decisions.
+If you independently choose to wager through an unaffiliated third party:
+You must comply with all applicable laws.
+You must satisfy the third party’s age and location requirements.
+You should use only properly licensed services.
+You assume all risk of loss.
+You should never wager more than you can afford to lose.
+Hoopsline has no fiduciary duty to you and does not provide financial, investment, tax, legal, or professional gambling advice.
+4. Accounts
+You may need an account to access some features.
+You agree to:
+Provide accurate and current information.
+Confirm truthfully that you are at least eighteen.
+Keep account information updated.
+Maintain the confidentiality of your credentials.
+Use a unique and secure password.
+Notify us promptly of suspected unauthorized access.
+Accept responsibility for activity conducted through your account.
+You may not sell, transfer, rent, share, or sublicense your account.
+We may require email, telephone, age, identity, or payment verification.
+We may refuse, suspend, or revoke access when account information is false, incomplete, fraudulent, or legally insufficient.
+5. License to Use the Service
+Subject to these Terms, Hoopsline grants you a limited, personal, revocable, nonexclusive, nontransferable, and nonsublicensable license to access and use the Service for lawful, noncommercial purposes.
+You may share an individual Hoopsline result for personal, noncommercial purposes if you do not:
+Remove attribution.
+Alter the result in a misleading manner.
+Represent the result as a guaranteed outcome.
+Imply sponsorship or endorsement.
+Disclose another person’s private information.
+Reproduce or redistribute a material portion of the Service.
+No rights are granted except those expressly stated in these Terms.
+6. Acceptable Use
+You may not:
+Violate any law, regulation, court order, or third-party right.
+Use the Service if you are under eighteen.
+Use the Service for unlawful gambling activity.
+Misrepresent your identity, age, location, or affiliation.
+Access another person’s account without permission.
+Scrape, harvest, crawl, or systematically extract Service content without written authorization.
+Use bots or automated tools that exceed published limits or interfere with normal operation.
+Circumvent subscriptions, quotas, rate limits, security controls, or access restrictions.
+Reverse engineer, decompile, disassemble, or attempt to discover source code, models, weights, training methods, or nonpublic APIs except where such a restriction is prohibited by law.
+Use Service content or outputs to train, benchmark, or develop a competing model or service without written permission.
+Resell, sublicense, republish, or commercially exploit sports data or Hoopsline outputs.
+Upload malware or malicious code.
+Probe, scan, or test system vulnerabilities without written authorization.
+Overload, disrupt, damage, or impair the Service.
+Submit false feedback intended to manipulate performance statistics.
+Impersonate Hoopsline, a team, league, player, sportsbook, or another person.
+Use Hoopsline trademarks or branding without permission.
+Use the Service to harass, threaten, defraud, or harm another person.
+We may investigate suspected violations and cooperate with lawful investigations.
+7. User Content and Feedback
+“User Content” includes profile images, support messages, feedback, bug reports, feature requests, and other material you submit.
+You retain ownership of your User Content.
+You grant Hoopsline a worldwide, nonexclusive, royalty-free license to host, store, reproduce, modify, and use User Content only as reasonably necessary to operate, secure, support, and improve the Service.
+You represent that you have all rights necessary to submit User Content and that it does not violate any law or third-party right.
+If you provide ideas, suggestions, or feedback, you grant Hoopsline a perpetual, irrevocable, worldwide, royalty-free right to use and incorporate that feedback without restriction or compensation.
+8. Subscriptions and Payments
+Hoopsline may offer free and paid plans.
+The specific price, billing interval, features, renewal terms, trial terms, taxes, and cancellation instructions presented at checkout are incorporated into these Terms.
+Automatic Renewal
+Unless stated otherwise at checkout, paid subscriptions automatically renew at the end of each billing period until canceled.
+By purchasing a recurring subscription, you authorize Hoopsline and its payment processor to charge the payment method on file for:
+The displayed subscription fee.
+Applicable taxes.
+Any clearly disclosed price change taking effect at a future renewal.
+Cancellation
+You may cancel using the cancellation method identified at checkout, through your account or billing settings, or by emailing Contact@hoopsline.com.
+Cancellation takes effect at the end of the current paid billing period unless applicable law requires otherwise.
+You will ordinarily retain paid access through the end of the current billing period.
+Deleting an application, closing a browser, or ceasing to use the Service does not automatically cancel a subscription.
+Refunds
+Except where required by law or expressly stated in a specific offer, payments are nonrefundable and Hoopsline does not provide prorated credits for partially used billing periods.
+If you believe a charge was made in error, email Contact@hoopsline.com.
+Trials and Promotions
+Trials and promotional prices may be subject to additional terms.
+Unless stated otherwise, a trial may convert to a paid subscription when it ends. Any conversion price and cancellation deadline will be disclosed before enrollment.
+Price Changes
+Hoopsline may change subscription prices.
+Price changes generally apply beginning with a future billing period after legally sufficient notice. You may cancel before the new price takes effect.
+Taxes
+You are responsible for applicable taxes unless they are included in the displayed price or collected by Hoopsline.
+9. Electronic Communications
+You consent to receive agreements, notices, receipts, disclosures, and other communications electronically.
+Transactional messages may include:
+Account verification.
+Security alerts.
+Password resets.
+Receipts.
+Subscription notices.
+Support responses.
+Requested prediction notifications.
+Marketing communications are optional where required by law.
+Marketing emails will provide an unsubscribe method.
+Marketing text-message consent is not a condition of purchase. Message and data rates may apply. You may revoke marketing-text consent by replying STOP or emailing Contact@hoopsline.com.
+You are responsible for keeping your contact information current.
+10. Sports Data and Third-Party Content
+Hoopsline relies on third-party and publicly available information.
+Schedules, rosters, injuries, player status, statistics, odds, lines, and news may be:
+Delayed.
+Incomplete.
+Incorrect.
+Unavailable.
+Changed without notice.
+Subject to third-party licensing restrictions.
+Hoopsline does not guarantee that a displayed line matches a line currently offered elsewhere.
+Third-party trade names, team names, league names, player names, logos, and trademarks belong to their respective owners.
+Their appearance does not imply sponsorship, affiliation, or endorsement.
+You receive no ownership or redistribution rights in third-party content.
+11. Intellectual Property
+The Service and its non-user content—including software, interfaces, designs, models, methodologies, scoring systems, compilations, text, graphics, branding, and documentation—are owned by or licensed to Hoopsline and protected by intellectual-property laws.
+“Hoopsline,” its logos, and associated branding are trademarks or trade dress of Hoopsline.
+You may not use Hoopsline’s intellectual property without written permission.
+12. Copyright Complaints
+If you believe material available through Hoopsline infringes your copyright, email Contact@hoopsline.com with “Copyright Complaint” in the subject line.
+Your notice should include:
+Identification of the copyrighted work.
+Identification and location of the allegedly infringing material.
+Your name and email address.
+A statement of good-faith belief that the use is unauthorized.
+A statement that the information in the notice is accurate and that you are authorized to act for the copyright owner.
+Your physical or electronic signature.
+Hoopsline may remove allegedly infringing material and terminate repeat infringers where appropriate.
+13. Availability and Changes
+Hoopsline does not guarantee uninterrupted or error-free availability.
+We may:
+Add, remove, suspend, or modify features.
+Change supported leagues, statistics, plans, quotas, or data sources.
+Perform maintenance.
+Limit requests.
+Temporarily disable features during outages or security incidents.
+Label features as beta, preview, or experimental.
+Discontinue some or all of the Service.
+We will provide notice when legally required. Emergency security or operational changes may occur without advance notice.
+14. Suspension and Termination
+You may stop using Hoopsline at any time.
+You may request account deletion through account settings or by emailing Contact@hoopsline.com, subject to the Privacy Policy and applicable retention obligations.
+Hoopsline may suspend or terminate access if:
+You are under eighteen.
+You violate these Terms.
+Payment is declined or reversed.
+We reasonably suspect fraud, abuse, unauthorized access, or a security risk.
+Continued access could create legal liability.
+Suspension or termination is required by law or a service provider.
+The Service is discontinued.
+Termination does not affect rights or obligations that accrued before termination.
+Sections concerning intellectual property, payments, disclaimers, liability, indemnification, disputes, and general legal terms survive termination.
+15. Privacy
+The Hoopsline Privacy Policy explains how we handle personal information and is incorporated into these Terms.
+If these Terms conflict with the Privacy Policy concerning personal-information practices, the Privacy Policy controls for that subject.
+16. Disclaimer of Warranties
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SERVICE AND ALL PREDICTIONS, PROJECTIONS, SCORES, RECOMMENDATIONS, SPORTS DATA, AND CONTENT ARE PROVIDED “AS IS” AND “AS AVAILABLE.”
+HOOPSLINE DISCLAIMS ALL EXPRESS, IMPLIED, AND STATUTORY WARRANTIES, INCLUDING WARRANTIES OF:
+MERCHANTABILITY.
+FITNESS FOR A PARTICULAR PURPOSE.
+TITLE.
+NON-INFRINGEMENT.
+ACCURACY.
+COMPLETENESS.
+AVAILABILITY.
+SECURITY.
+QUIET ENJOYMENT.
+HOOPSLINE DOES NOT WARRANT THAT:
+ANY PREDICTION WILL BE CORRECT.
+ANY CONFIDENCE SCORE REPRESENTS CERTAINTY.
+ANY USER WILL PROFIT OR AVOID LOSS.
+DATA WILL BE CURRENT OR ERROR-FREE.
+THE SERVICE WILL OPERATE WITHOUT INTERRUPTION.
+DEFECTS WILL BE CORRECTED.
+THE SERVICE WILL MEET YOUR EXPECTATIONS.
+Some jurisdictions do not permit certain warranty exclusions. In those jurisdictions, exclusions apply only to the extent permitted by law.
+17. Limitation of Liability
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, HOOPSLINE AND ITS OWNERS, OFFICERS, EMPLOYEES, CONTRACTORS, AFFILIATES, LICENSORS, AND SERVICE PROVIDERS WILL NOT BE LIABLE FOR:
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL, OR PUNITIVE DAMAGES.
+LOST PROFITS, REVENUE, DATA, BUSINESS, OR GOODWILL.
+WAGERING OR FINANCIAL LOSSES.
+ACTIONS TAKEN IN RELIANCE ON A PREDICTION.
+THIRD-PARTY CONDUCT OR CONTENT.
+SERVICE INTERRUPTIONS OR DATA ERRORS.
+UNAUTHORIZED ACCESS OUTSIDE HOOPSLINE’S REASONABLE CONTROL.
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, HOOPSLINE’S TOTAL LIABILITY FOR ALL CLAIMS ARISING OUT OF OR RELATING TO THE SERVICE OR THESE TERMS WILL NOT EXCEED THE GREATER OF:
+THE AMOUNT YOU PAID TO HOOPSLINE DURING THE TWELVE MONTHS BEFORE THE EVENT GIVING RISE TO THE CLAIM; OR
+ONE HUNDRED U.S. DOLLARS.
+These limitations apply regardless of the legal theory and even if a remedy fails its essential purpose.
+Nothing in these Terms limits liability that cannot lawfully be limited, including liability for fraud, willful misconduct, or other nonwaivable consumer rights.
+18. Indemnification
+To the extent permitted by law, you agree to defend, indemnify, and hold harmless Hoopsline and its owners, officers, employees, contractors, affiliates, licensors, and service providers from claims, losses, liabilities, damages, judgments, costs, and reasonable attorneys’ fees arising from:
+Your unlawful use of the Service.
+Your violation of these Terms.
+Your User Content.
+Your violation of another person’s rights.
+Your fraud, misconduct, or unauthorized activity.
+This obligation does not apply to the extent a claim results from Hoopsline’s own unlawful conduct.
+19. Informal Dispute Resolution
+Before filing a lawsuit, you and Hoopsline agree to attempt in good faith to resolve the dispute informally for at least thirty days.
+Send a dispute notice to Contact@hoopsline.com with “Legal Dispute” in the subject line.
+The notice should include:
+Your name and account email.
+The nature of the dispute.
+Relevant dates and transactions.
+The relief requested.
+This requirement does not prevent either party from seeking urgent injunctive relief or filing an eligible claim in small-claims court.
+20. Governing Law and Venue
+These Terms are governed by the laws of the State of Oregon, without regard to conflict-of-law principles.
+Subject to nonwaivable consumer rights, the state and federal courts located in Oregon will have jurisdiction over disputes arising from these Terms or the Service.
+If applicable law gives you the right to bring a claim in your place of residence or receive protections under local law, nothing in this section removes those rights.
+21. International Use
+Hoopsline operates from Oregon, United States.
+We do not represent that the Service is lawful or appropriate in every jurisdiction.
+You are responsible for compliance with local laws, including laws concerning age, sports wagering, consumer protection, sanctions, and data use.
+You may not use the Service in violation of United States export controls or sanctions.
+22. Changes to These Terms
+Hoopsline may update these Terms to reflect changes in law, features, subscriptions, security, or business operations.
+We will update the “Last Updated” date and provide any additional notice required by law.
+Material changes generally apply prospectively.
+Continued use after revised Terms become effective constitutes acceptance where permitted by law.
+If you do not accept revised Terms, you must stop using the Service and cancel any active subscription.
+23. General Terms
+Entire Agreement
+These Terms, the Privacy Policy, checkout disclosures, and any feature-specific terms form the entire agreement concerning the Service.
+Severability
+If any provision is found unenforceable, it will be modified to the minimum extent necessary or removed, and the remaining provisions will remain effective.
+No Waiver
+Failure to enforce a provision is not a waiver.
+Assignment
+You may not assign these Terms without written consent from Hoopsline.
+Hoopsline may assign these Terms in connection with a merger, acquisition, reorganization, financing, sale of assets, or operation of law.
+Force Majeure
+Hoopsline is not responsible for delays or failures caused by events beyond its reasonable control, including internet failures, infrastructure outages, labor disputes, natural disasters, war, civil unrest, government actions, data-provider failures, or major sporting-event disruptions.
+No Third-Party Beneficiaries
+These Terms do not create rights for any third party except as expressly stated.
+Headings
+Headings are provided for convenience and do not affect interpretation.
+24. Contact Information
+Questions, legal notices, billing inquiries, copyright complaints, and support requests may be sent to:
+Hoopsline
+Oregon, United States
+Contact@hoopsline.com

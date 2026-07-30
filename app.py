@@ -11,7 +11,10 @@ import os
 import sys
 import logging
 import secrets
+import re
 from datetime import datetime, timedelta, timezone
+from functools import lru_cache
+from pathlib import Path
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
@@ -178,6 +181,44 @@ def _send_waitlist_verification(email: str, first_name: str) -> bool:
     return send_waitlist_verification_email(email, first_name, link)
 
 
+@lru_cache(maxsize=2)
+def _load_legal_document(document: str) -> dict:
+    """Load the user-provided legal copy without changing its wording."""
+    source = Path(__file__).with_name('legal') / 'hoopsline-legal.txt'
+    lines = [line.strip() for line in source.read_text(encoding='utf-8').splitlines()
+             if line.strip()]
+    terms_index = lines.index('HOOPSLINE TERMS OF SERVICE')
+    selected = lines[:terms_index] if document == 'privacy' else lines[terms_index:]
+
+    sections = []
+    current = {'heading': None, 'id': 'introduction', 'paragraphs': []}
+    for line in selected[3:]:
+        heading_match = re.match(r'^(\d+)\.\s+(.+)$', line)
+        if heading_match:
+            if current['paragraphs']:
+                sections.append(current)
+            current = {
+                'heading': line,
+                'id': f'section-{heading_match.group(1)}',
+                'paragraphs': [],
+            }
+        else:
+            current['paragraphs'].append(line)
+    if current['paragraphs']:
+        sections.append(current)
+
+    return {
+        'title': (
+            'Hoopsline Privacy Policy'
+            if document == 'privacy'
+            else 'Hoopsline Terms of Service'
+        ),
+        'effective_date': selected[1],
+        'last_updated': selected[2],
+        'sections': sections,
+    }
+
+
 @app.route('/')
 def index():
     return redirect(url_for('waitlist'))
@@ -186,6 +227,24 @@ def index():
 @app.route('/waitlist')
 def waitlist():
     return render_template('waitlist.html')
+
+
+@app.route('/privacy')
+def privacy():
+    return render_template(
+        'legal.html',
+        document=_load_legal_document('privacy'),
+        active_document='privacy',
+    )
+
+
+@app.route('/terms')
+def terms():
+    return render_template(
+        'legal.html',
+        document=_load_legal_document('terms'),
+        active_document='terms',
+    )
 
 
 @app.route('/api/waitlist/count')
