@@ -488,6 +488,11 @@
       gap: 16px;
     }
 
+    .wl-footer__age {
+      flex: 1;
+      text-align: center;
+    }
+
     .wl-footer a {
       color: var(--wl-muted);
       text-decoration: none;
@@ -557,6 +562,10 @@
       .wl-footer__inner {
         align-items: flex-start;
         flex-direction: column;
+      }
+
+      .wl-footer__age {
+        text-align: left;
       }
     }
   </style>
@@ -692,6 +701,7 @@
   <footer class="wl-footer">
     <div class="wl-footer__inner">
       <span>&copy; 2026 Hoopsline</span>
+      <span class="wl-footer__age">Hoopsline is intended only for adults 18 years of age or older.</span>
       <nav aria-label="Legal">
         <a href="{{ url_for('privacy') }}">Privacy Policy</a>
         <a href="{{ url_for('terms') }}">Terms of Service</a>
