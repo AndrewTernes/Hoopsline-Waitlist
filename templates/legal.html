@@ -62,13 +62,29 @@
     }
     .legal-nav a {
       display: block;
-      padding: 6px 0;
+      position: relative;
+      padding: 6px 0 6px 13px;
       color: var(--muted);
       font-size: .78rem;
       line-height: 1.35;
       text-decoration: none;
+      transition: color .16s ease;
     }
     .legal-nav a:hover, .legal-nav a:focus-visible { color: var(--accent); }
+    .legal-nav a.is-active {
+      color: #fff;
+      font-weight: 700;
+    }
+    .legal-nav a.is-active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      border-radius: 2px;
+      background: #fff;
+    }
     .legal-title {
       padding-bottom: 32px;
       border-bottom: 1px solid var(--border);
@@ -139,5 +155,48 @@
   </main>
 
   <footer class="legal-footer">&copy; 2026 Hoopsline. All rights reserved.</footer>
+  <script nonce="{{ csp_nonce }}">
+    (function () {
+      var links = Array.from(document.querySelectorAll('.legal-nav a[href^="#"]'));
+      var sections = links.map(function (link) {
+        return document.querySelector(link.getAttribute('href'));
+      }).filter(Boolean);
+      var ticking = false;
+
+      function updateActiveSection() {
+        var readingLine = Math.min(180, window.innerHeight * 0.28);
+        var activeIndex = 0;
+
+        sections.forEach(function (section, index) {
+          if (section.getBoundingClientRect().top <= readingLine) {
+            activeIndex = index;
+          }
+        });
+
+        links.forEach(function (link, index) {
+          var active = index === activeIndex;
+          link.classList.toggle('is-active', active);
+          if (active) {
+            link.setAttribute('aria-current', 'location');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+        ticking = false;
+      }
+
+      function requestUpdate() {
+        if (!ticking) {
+          window.requestAnimationFrame(updateActiveSection);
+          ticking = true;
+        }
+      }
+
+      window.addEventListener('scroll', requestUpdate, { passive: true });
+      window.addEventListener('resize', requestUpdate);
+      window.addEventListener('hashchange', requestUpdate);
+      updateActiveSection();
+    }());
+  </script>
 </body>
 </html>
