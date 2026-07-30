@@ -692,11 +692,12 @@
           </svg>
         </span>
         <span>
-          Thank You For Signing Up For the Early Access at Hoopsline. We will Alert you when the site is Live
+          <strong>Check your inbox.</strong>
+          Click the verification link we sent to finish joining the list.
         </span>
       </div>
 
-      <p class="wl-form-note">Your information is used only for Hoopsline access and product updates.</p>
+      <p class="wl-form-note">Email verification is required. Your information is used only for Hoopsline access and product updates.</p>
     </aside>
   </main>
 
@@ -835,7 +836,7 @@
         }
 
         if (data.skip_verification) {
-          localStorage.setItem('hoopsline_signed_up', 'true');
+          localStorage.setItem('hoopsline_verification_sent', 'true');
           setWaitlistSuccess();
           return;
         }
@@ -888,7 +889,7 @@
           throw new Error(data.error || 'Verification failed. Try again.');
         }
 
-        localStorage.setItem('hoopsline_signed_up', 'true');
+        localStorage.setItem('hoopsline_verification_sent', 'true');
         setWaitlistSuccess();
       } catch (requestError) {
         setWaitlistError(requestError.message || 'Something went wrong. Please try again.');
@@ -922,7 +923,7 @@
     });
 
     window.addEventListener('DOMContentLoaded', function() {
-      if (localStorage.getItem('hoopsline_signed_up')) {
+      if (localStorage.getItem('hoopsline_verification_sent')) {
         setWaitlistSuccess();
       }
     });

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ 'Email verified' if verified else 'Verification problem' }} | Hoopsline</title>
+  <style>
+    :root{color-scheme:dark;font-family:Inter,system-ui,sans-serif}*{box-sizing:border-box}
+    body{min-height:100vh;margin:0;display:grid;place-items:center;background:#050505;color:#f5f5f5;padding:24px}
+    main{width:min(520px,100%);padding:40px;background:#111;border:1px solid #292929;border-radius:16px;text-align:center}
+    .mark{width:54px;height:54px;margin:0 auto 24px;display:grid;place-items:center;border-radius:50%;background:{{ '#f97316' if verified else '#2a2a2a' }};color:{{ '#090909' if verified else '#f97316' }};font-size:26px;font-weight:800}
+    .brand{color:#f97316;font-size:12px;font-weight:800;letter-spacing:.14em}h1{margin:12px 0;font-size:clamp(28px,5vw,36px)}
+    p{margin:0 auto 28px;color:#aaa;line-height:1.65}a{display:inline-block;padding:12px 20px;border-radius:8px;background:#f97316;color:#090909;font-weight:750;text-decoration:none}
+  </style>
+</head>
+<body><main>
+  <div class="mark" aria-hidden="true">{{ '✓' if verified else '!' }}</div>
+  <div class="brand">HOOPSLINE</div>
+  <h1>{{ 'Email verified' if verified else 'Verification incomplete' }}</h1>
+  <p>{{ message }}</p>
+  <a href="/waitlist">{{ 'Back to Hoopsline' if verified else 'Return to the waitlist' }}</a>
+</main></body>
+</html>

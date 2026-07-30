@@ -87,6 +87,7 @@ def _insert_waitlist_row(first_name, last_name, email, phone, birthday):
             'email':      email,
             'phone':      phone,
             'birthday':   birthday,
+            'verified_at': None,
         }).execute()
         return True, False, ''
     except Exception as insert_error:
@@ -95,6 +96,19 @@ def _insert_waitlist_row(first_name, last_name, email, phone, birthday):
             return True, True, ''
         logger.error('waitlist insert error: %s', insert_error)
         return False, False, str(insert_error)
+
+
+def _send_waitlist_verification(email: str, first_name: str) -> bool:
+    from itsdangerous import URLSafeTimedSerializer
+    from email_utils import send_waitlist_verification_email
+
+    serializer = URLSafeTimedSerializer(
+        app.config['SECRET_KEY'], salt='waitlist-email-verification'
+    )
+    token = serializer.dumps(email)
+    base_url = os.environ.get('WAITLIST_BASE_URL', request.url_root).rstrip('/')
+    link = f'{base_url}/waitlist/verify?token={token}'
+    return send_waitlist_verification_email(email, first_name, link)
 
 
 @app.route('/')
@@ -112,7 +126,8 @@ def waitlist_count():
     try:
         from supabase_client import get_supabase_admin
         sb = get_supabase_admin()
-        result = sb.table('waitlist').select('count', count='exact').execute()
+        result = (sb.table('waitlist').select('count', count='exact')
+                  .not_.is_('verified_at', 'null').execute())
         count = result.count or 0
         return jsonify({'count': count})
     except Exception as e:
@@ -165,7 +180,10 @@ def waitlist_send_code():
         ok, already_exists, _err = _insert_waitlist_row(first_name, last_name, email, phone, birthday)
         if not ok:
             return jsonify({'success': False, 'error': 'Oops, that didn\'t work. Please try again in a moment.'}), 500
-        return jsonify({'success': True, 'already_exists': already_exists, 'skip_verification': True})
+        if not _send_waitlist_verification(email, first_name):
+            return jsonify({'success': False, 'error': 'We could not send the verification email. Please try again.'}), 503
+        return jsonify({'success': True, 'already_exists': already_exists,
+                        'skip_verification': True, 'verification_required': True})
 
     now = datetime.now(timezone.utc)
     pending = session.get('waitlist_pending')
@@ -280,10 +298,54 @@ def waitlist_verify_code():
     )
     if not ok:
         return jsonify({'success': False, 'error': 'Unable to complete your signup right now. Please try again.'}), 500
+    if not _send_waitlist_verification(pending['email'], pending['first_name']):
+        return jsonify({'success': False, 'error': 'Your phone was verified, but we could not send the email. Please try again.'}), 503
 
     session.pop('waitlist_pending', None)
     session.modified = True
-    return jsonify({'success': True, 'already_exists': already_exists})
+    return jsonify({'success': True, 'already_exists': already_exists,
+                    'verification_required': True})
+
+
+@app.route('/waitlist/verify')
+def waitlist_verify():
+    from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
+
+    serializer = URLSafeTimedSerializer(
+        app.config['SECRET_KEY'], salt='waitlist-email-verification'
+    )
+    try:
+        email = serializer.loads(
+            (request.args.get('token') or '').strip(), max_age=86400
+        )
+    except SignatureExpired:
+        return render_template(
+            'waitlist_verify.html', verified=False,
+            message='This verification link has expired. Complete the waitlist form again for a new one.'
+        ), 400
+    except BadSignature:
+        return render_template(
+            'waitlist_verify.html', verified=False,
+            message='This verification link is invalid. Complete the waitlist form again.'
+        ), 400
+
+    try:
+        from supabase_client import get_supabase_admin
+        result = (get_supabase_admin().table('waitlist')
+                  .update({'verified_at': datetime.now(timezone.utc).isoformat()})
+                  .eq('email', email).execute())
+        if not result.data:
+            raise ValueError('No matching waitlist request')
+        return render_template(
+            'waitlist_verify.html', verified=True,
+            message='Your email is verified. You are officially on the Hoopsline early access list.'
+        )
+    except Exception as exc:
+        logger.error('waitlist_verify error: %s', exc)
+        return render_template(
+            'waitlist_verify.html', verified=False,
+            message='We could not verify your email right now. Please try the link again shortly.'
+        ), 500
 
 
 if __name__ == '__main__':
