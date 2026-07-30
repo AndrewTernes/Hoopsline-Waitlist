@@ -635,7 +635,7 @@
       <p class="wl-card__intro">Tell us where to send product updates and access details.</p>
       <p class="wl-age-notice">You must be 18 or older to join the Hoopsline early access list.</p>
 
-      <form class="wl-form" id="details-form" onsubmit="submitDetails(event)" novalidate>
+      <form class="wl-form" id="details-form" novalidate>
         <div class="wl-name-row">
           <div class="wl-field">
             <label for="hero-firstname">First name</label>
@@ -667,22 +667,6 @@
         </button>
       </form>
 
-      <form class="wl-form" id="code-form" onsubmit="submitCode(event)" novalidate style="display:none;">
-        <p class="wl-card__intro" id="code-intro">Enter the six-digit code we texted you.</p>
-        <div class="wl-field">
-          <label for="hero-code">Verification code</label>
-          <input type="text" id="hero-code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6"
-                 placeholder="000000" autocomplete="one-time-code" required>
-        </div>
-        <button class="wl-submit btn-primary" id="code-submit" type="submit">
-          Verify phone
-        </button>
-        <p class="wl-form-note">
-          Didn't get it?
-          <button type="button" id="resend-code-btn" class="wl-resend-btn">Send another code</button>
-        </p>
-      </form>
-
       <div class="wl-error" id="hero-error" role="alert" aria-live="polite"></div>
 
       <div class="wl-success" id="hero-success" role="status" aria-live="polite">
@@ -695,7 +679,7 @@
           <strong>Check your inbox.</strong>
           Your request is still pending. Click the verification link we sent
           to finish joining the list.
-          <button type="button" class="wl-resend-btn" onclick="retryWaitlistEmail()">
+          <button type="button" class="wl-resend-btn" id="retry-email-btn">
             Didn&rsquo;t get it? Try again
           </button>
         </span>
@@ -711,7 +695,7 @@
     </div>
   </footer>
 
-  <script>
+  <script nonce="{{ csp_nonce }}">
     function getCsrfToken() {
       var meta = document.querySelector('meta[name="csrf-token"]');
       return meta ? meta.getAttribute('content') : '';
@@ -762,28 +746,6 @@
     function clearWaitlistError() {
       var error = document.getElementById('hero-error');
       if (error) error.style.display = 'none';
-    }
-
-    var resendTimer = null;
-
-    function startResendCooldown(seconds) {
-      var button = document.getElementById('resend-code-btn');
-      if (!button) return;
-      var remaining = seconds;
-      var baseLabel = 'Send another code';
-      button.disabled = true;
-      button.textContent = baseLabel + ' (' + remaining + 's)';
-      if (resendTimer) window.clearInterval(resendTimer);
-      resendTimer = window.setInterval(function () {
-        remaining -= 1;
-        if (remaining <= 0) {
-          window.clearInterval(resendTimer);
-          button.disabled = false;
-          button.textContent = baseLabel;
-        } else {
-          button.textContent = baseLabel + ' (' + remaining + 's)';
-        }
-      }, 1000);
     }
 
     async function submitDetails(event) {
@@ -859,18 +821,7 @@
           throw new Error(data.error || 'Unable to submit your request.');
         }
 
-        if (data.skip_verification) {
-          setWaitlistSuccess();
-          return;
-        }
-
-        var codeIntro = document.getElementById('code-intro');
-        if (codeIntro && data.phone_hint) {
-          codeIntro.textContent = 'Enter the six-digit code sent to ' + data.phone_hint + '.';
-        }
-        document.getElementById('details-form').style.display = 'none';
-        document.getElementById('code-form').style.display = '';
-        startResendCooldown(60);
+        setWaitlistSuccess();
       } catch (requestError) {
         setWaitlistError(requestError.message || 'Something went wrong. Please try again.');
         if (button) {
@@ -880,69 +831,8 @@
       }
     }
 
-    async function submitCode(event) {
-      if (event) event.preventDefault();
-      clearWaitlistError();
-
-      var codeInput = document.getElementById('hero-code');
-      var button = document.getElementById('code-submit');
-      var code = codeInput.value.trim();
-
-      if (!/^\d{6}$/.test(code)) {
-        setWaitlistError('Enter the six-digit code from your message.');
-        return;
-      }
-
-      if (button) {
-        button.disabled = true;
-        button.textContent = 'Verifying…';
-      }
-
-      try {
-        var response = await fetch('/api/waitlist/verify-code', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCsrfToken()
-          },
-          body: JSON.stringify({ code: code })
-        });
-        var data = await response.json();
-        if (!response.ok || data.success === false) {
-          throw new Error(data.error || 'Verification failed. Try again.');
-        }
-
-        setWaitlistSuccess();
-      } catch (requestError) {
-        setWaitlistError(requestError.message || 'Something went wrong. Please try again.');
-        if (button) {
-          button.disabled = false;
-          button.textContent = 'Verify phone';
-        }
-      }
-    }
-
-    document.getElementById('resend-code-btn').addEventListener('click', async function () {
-      var button = this;
-      clearWaitlistError();
-      button.disabled = true;
-      try {
-        var response = await fetch('/api/waitlist/resend-code', {
-          method: 'POST',
-          headers: { 'X-CSRFToken': getCsrfToken() }
-        });
-        var data = await response.json();
-        if (!response.ok || data.success === false) {
-          throw new Error(data.error || 'Unable to send another code.');
-        }
-        document.getElementById('hero-code').value = '';
-        startResendCooldown(60);
-      } catch (requestError) {
-        setWaitlistError(requestError.message || 'Something went wrong. Please try again.');
-        button.disabled = false;
-        button.textContent = 'Send another code';
-      }
-    });
+    document.getElementById('details-form').addEventListener('submit', submitDetails);
+    document.getElementById('retry-email-btn').addEventListener('click', retryWaitlistEmail);
 
   </script>
 </body>

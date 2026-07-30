@@ -2,7 +2,7 @@
 Hoopsline — standalone waitlist signup app.
 
 Minimal Flask app serving ONLY the early-access waitlist: the landing page
-and its phone-verification signup flow. No predictions, admin panel, auth,
+and its email-verification signup flow. No predictions, admin panel, auth,
 or Stripe — those live in the main app and are intentionally not reachable
 from this deployment.
 """
@@ -21,17 +21,18 @@ try:
 except ImportError:
     pass
 
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for, g
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFError
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1)
 
 # FLASK_SECRET_KEY must be set in production (Vercel env vars) so sessions
 # survive across serverless invocations — a random per-process key would
@@ -43,13 +44,16 @@ if not _secret:
         raise RuntimeError('FLASK_SECRET_KEY must be set in production.')
     logger.warning('[STARTUP] FLASK_SECRET_KEY not set — using an ephemeral key (dev only).')
     _secret = secrets.token_hex(32)
+elif os.environ.get('VERCEL') and len(_secret) < 32:
+    raise RuntimeError('FLASK_SECRET_KEY must be at least 32 characters.')
 app.secret_key = _secret
 
-app.config['MAX_CONTENT_LENGTH']         = 1 * 1024 * 1024   # 1 MB — plenty for this form
+app.config['MAX_CONTENT_LENGTH']         = 32 * 1024
 app.config['SESSION_COOKIE_HTTPONLY']    = True
 app.config['SESSION_COOKIE_SAMESITE']    = 'Lax'
 app.config['SESSION_COOKIE_SECURE']      = not os.environ.get('FLASK_DEBUG', '').lower() in ('1', 'true')
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
+app.config['WTF_CSRF_SSL_STRICT']        = False
 
 limiter = Limiter(
     app=app,
@@ -60,20 +64,59 @@ limiter = Limiter(
 
 csrf = CSRFProtect(app)
 
-# Temporary kill switch while Sent.dm is unreachable — set SKIP_PHONE_VERIFICATION=1
-# in Vercel env vars to accept waitlist signups without sending/checking an SMS
-# code. Phones collected this way are unverified; unset (or remove) this once
-# Sent.dm access is restored.
-SKIP_PHONE_VERIFICATION = os.environ.get('SKIP_PHONE_VERIFICATION', '').lower() in ('1', 'true')
-if SKIP_PHONE_VERIFICATION:
-    logger.warning('[STARTUP] SKIP_PHONE_VERIFICATION is on — waitlist signups will not be phone-verified.')
+
+@app.errorhandler(CSRFError)
+def handle_csrf_error(_error):
+    return jsonify({
+        'success': False,
+        'error': 'Your form session expired. Refresh the page and try again.',
+    }), 400
+
+@app.before_request
+def enforce_request_security():
+    g.csp_nonce = secrets.token_urlsafe(24)
+    if request.method in ('POST', 'PUT', 'PATCH') and not request.is_json:
+        return jsonify({'success': False, 'error': 'JSON request required.'}), 415
+    if request.method in ('POST', 'PUT', 'PATCH'):
+        origin = request.headers.get('Origin')
+        if origin and origin != 'https://waitlist.hoopsline.com':
+            return jsonify({'success': False, 'error': 'Invalid request origin.'}), 403
 
 
-def _mask_phone(phone: str) -> str:
-    """Return a display-safe version like +1 ***-***-7890."""
-    if len(phone) >= 10:
-        return f'+1 ***-***-{phone[-4:]}'
-    return '***'
+@app.context_processor
+def inject_csp_nonce():
+    return {'csp_nonce': g.get('csp_nonce', '')}
+
+
+@app.after_request
+def add_security_headers(response):
+    response.headers['Content-Security-Policy'] = (
+        "default-src 'self'; "
+        f"script-src 'self' 'nonce-{g.get('csp_nonce', '')}'; "
+        "style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
+        "font-src 'self'; connect-src 'self'; object-src 'none'; "
+        "base-uri 'none'; frame-ancestors 'none'; form-action 'self'; "
+        "upgrade-insecure-requests"
+    )
+    response.headers['Referrer-Policy'] = 'no-referrer'
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['Permissions-Policy'] = (
+        'camera=(), microphone=(), geolocation=(), payment=(), usb=()'
+    )
+    response.headers['Cross-Origin-Opener-Policy'] = 'same-origin'
+    response.headers['Cache-Control'] = 'no-store'
+    if request.is_secure:
+        response.headers['Strict-Transport-Security'] = (
+            'max-age=31536000; includeSubDomains'
+        )
+    return response
+
+
+def _email_rate_key():
+    payload = request.get_json(silent=True) or {}
+    email = str(payload.get('email') or '').strip().lower()
+    return f'email:{email}' if email else f'ip:{get_remote_address()}'
 
 
 def _insert_waitlist_row(first_name, last_name, email, phone, birthday):
@@ -94,7 +137,7 @@ def _insert_waitlist_row(first_name, last_name, email, phone, birthday):
         error_msg = str(insert_error).lower()
         if 'unique constraint' in error_msg or 'duplicate' in error_msg:
             return True, True, ''
-        logger.error('waitlist insert error: %s', insert_error)
+        logger.error('waitlist insert failed: %s', type(insert_error).__name__)
         return False, False, str(insert_error)
 
 
@@ -106,7 +149,31 @@ def _send_waitlist_verification(email: str, first_name: str) -> bool:
         app.config['SECRET_KEY'], salt='waitlist-email-verification'
     )
     token = serializer.dumps(email)
-    base_url = os.environ.get('WAITLIST_BASE_URL', request.url_root).rstrip('/')
+    base_url = os.environ.get(
+        'WAITLIST_BASE_URL', 'https://waitlist.hoopsline.com'
+    ).rstrip('/')
+    if base_url != 'https://waitlist.hoopsline.com':
+        logger.error('WAITLIST_BASE_URL must be https://waitlist.hoopsline.com')
+        return False
+    try:
+        from supabase_client import get_supabase_admin
+        reservation = get_supabase_admin().rpc(
+            'reserve_waitlist_verification_email',
+            {'target_email': email},
+        ).execute()
+        decision = reservation.data
+        if decision in ('verified', 'limited'):
+            # Keep the public response indistinguishable to prevent account
+            # enumeration and suppress repeat-email abuse.
+            return True
+        if decision != 'send':
+            logger.error('Verification email reservation returned %r', decision)
+            return False
+    except Exception as exc:
+        logger.error(
+            'Verification email reservation failed: %s', type(exc).__name__
+        )
+        return False
     link = f'{base_url}/waitlist/verify?token={token}'
     return send_waitlist_verification_email(email, first_name, link)
 
@@ -136,15 +203,12 @@ def waitlist_count():
 
 
 @app.route('/api/waitlist/send-code', methods=['POST'])
-@csrf.exempt
-@limiter.limit('5 per 15 minutes')
+@limiter.limit('3 per 15 minutes')
+@limiter.limit('3 per hour', key_func=_email_rate_key)
 def waitlist_send_code():
-    """Validate waitlist signup details and text a verification code. Nothing
-    is written to the waitlist table until the code is confirmed — the pending
-    signup lives only in the session, since there's no account to attach a
-    phone_verifications row to at this stage."""
+    """Create a pending signup and send the email ownership challenge."""
     from datetime import date
-    from sms import normalize_e164, send_verification_code
+    from sms import normalize_e164
     from input_sanitizer import sanitize_email, sanitize_string
 
     data       = request.get_json(silent=True) or {}
@@ -176,134 +240,16 @@ def waitlist_send_code():
     except ValueError:
         return jsonify({'success': False, 'error': 'Invalid date of birth.'}), 400
 
-    if SKIP_PHONE_VERIFICATION:
-        ok, already_exists, _err = _insert_waitlist_row(first_name, last_name, email, phone, birthday)
-        if not ok:
-            return jsonify({'success': False, 'error': 'Oops, that didn\'t work. Please try again in a moment.'}), 500
-        if not _send_waitlist_verification(email, first_name):
-            return jsonify({'success': False, 'error': 'We could not send the verification email. Please try again.'}), 503
-        return jsonify({'success': True, 'already_exists': already_exists,
-                        'skip_verification': True, 'verification_required': True})
-
-    now = datetime.now(timezone.utc)
-    pending = session.get('waitlist_pending')
-    if pending and pending.get('phone') == phone:
-        window_start = datetime.fromisoformat(pending['send_window_start'])
-        send_count   = pending['send_count'] if (now - window_start).total_seconds() < 3600 else 0
-        if send_count >= 3:
-            return jsonify({'success': False, 'error': 'Too many codes requested for this number. Try again in an hour.'}), 429
-        new_count        = send_count + 1
-        new_window_start = pending['send_window_start'] if (now - window_start).total_seconds() < 3600 else now.isoformat()
-    else:
-        new_count        = 1
-        new_window_start = now.isoformat()
-
-    code = ''.join(secrets.choice('0123456789') for _ in range(6))
-    session['waitlist_pending'] = {
-        'first_name':        first_name,
-        'last_name':         last_name,
-        'email':             email,
-        'phone':             phone,
-        'birthday':          birthday,
-        'code':              code,
-        'expires_at':        (now + timedelta(minutes=10)).isoformat(),
-        'attempts':          0,
-        'lockout_until':     None,
-        'send_count':        new_count,
-        'send_window_start': new_window_start,
-    }
-    session.modified = True
-
-    ok, err = send_verification_code(phone, code)
-    if not ok:
-        logger.warning(f'Waitlist verification SMS failed for {phone[:6]}***: {err}')
-        return jsonify({'success': False, 'error': 'Oops, that didn\'t work. Please try again in a moment.'}), 500
-
-    return jsonify({'success': True, 'phone_hint': _mask_phone(phone)})
-
-
-@app.route('/api/waitlist/resend-code', methods=['POST'])
-@csrf.exempt
-@limiter.limit('5 per 15 minutes')
-def waitlist_resend_code():
-    from sms import send_verification_code
-    pending = session.get('waitlist_pending')
-    if not pending:
-        return jsonify({'success': False, 'error': 'No pending signup. Start again.'}), 400
-
-    now          = datetime.now(timezone.utc)
-    window_start = datetime.fromisoformat(pending['send_window_start'])
-    send_count   = pending['send_count'] if (now - window_start).total_seconds() < 3600 else 0
-    if send_count >= 3:
-        return jsonify({'success': False, 'error': 'Too many code requests. Wait up to an hour before requesting again.'}), 429
-
-    code = ''.join(secrets.choice('0123456789') for _ in range(6))
-    pending['code']              = code
-    pending['expires_at']        = (now + timedelta(minutes=10)).isoformat()
-    pending['attempts']          = 0
-    pending['lockout_until']     = None
-    pending['send_count']        = send_count + 1
-    pending['send_window_start'] = pending['send_window_start'] if (now - window_start).total_seconds() < 3600 else now.isoformat()
-    session['waitlist_pending'] = pending
-    session.modified = True
-
-    ok, err = send_verification_code(pending['phone'], code)
-    if not ok:
-        logger.warning(f'Waitlist resend SMS failed for {pending["phone"][:6]}***: {err}')
-        return jsonify({'success': False, 'error': 'Oops, that didn\'t work. Please try again in a moment.'}), 500
-    return jsonify({'success': True})
-
-
-@app.route('/api/waitlist/verify-code', methods=['POST'])
-@csrf.exempt
-@limiter.limit('10 per 15 minutes')
-def waitlist_verify_code():
-    from input_sanitizer import sanitize_string
-
-    pending = session.get('waitlist_pending')
-    if not pending:
-        return jsonify({'success': False, 'error': 'No pending signup. Start again.'}), 400
-
-    code = sanitize_string((request.get_json(silent=True) or {}).get('code') or '', 6)
-    if not code:
-        return jsonify({'success': False, 'error': 'Verification code is required.'}), 400
-
-    now = datetime.now(timezone.utc)
-
-    if pending.get('lockout_until'):
-        lockout = datetime.fromisoformat(pending['lockout_until'])
-        if now < lockout:
-            remaining = int((lockout - now).total_seconds() / 60) + 1
-            return jsonify({'success': False, 'error': f'Too many failed attempts. Try again in {remaining} minute(s).'}), 429
-
-    expires = datetime.fromisoformat(pending['expires_at'])
-    if now > expires:
-        return jsonify({'success': False, 'error': 'Code has expired. Request a new one.'}), 400
-
-    if pending['code'] != code:
-        pending['attempts'] += 1
-        if pending['attempts'] >= 5:
-            pending['lockout_until'] = (now + timedelta(minutes=30)).isoformat()
-            session['waitlist_pending'] = pending
-            session.modified = True
-            return jsonify({'success': False, 'error': 'Too many failed attempts. Try again in 30 minutes.'}), 429
-        session['waitlist_pending'] = pending
-        session.modified = True
-        remaining = max(0, 5 - pending['attempts'])
-        return jsonify({'success': False, 'error': f'Incorrect code. {remaining} attempt(s) remaining.'}), 400
-
     ok, already_exists, _err = _insert_waitlist_row(
-        pending['first_name'], pending['last_name'], pending['email'],
-        pending['phone'], pending['birthday'],
+        first_name, last_name, email, phone, birthday
     )
     if not ok:
         return jsonify({'success': False, 'error': 'Unable to complete your signup right now. Please try again.'}), 500
-    if not _send_waitlist_verification(pending['email'], pending['first_name']):
-        return jsonify({'success': False, 'error': 'Your phone was verified, but we could not send the email. Please try again.'}), 503
+    if not _send_waitlist_verification(email, first_name):
+        return jsonify({'success': False, 'error': 'We could not send the verification email. Please try again.'}), 503
 
-    session.pop('waitlist_pending', None)
-    session.modified = True
     return jsonify({'success': True, 'already_exists': already_exists,
+                    'skip_verification': True,
                     'verification_required': True})
 
 
@@ -350,4 +296,5 @@ def waitlist_verify():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5050))
-    app.run(host='0.0.0.0', port=port, debug=os.environ.get('FLASK_DEBUG', '').lower() in ('1', 'true'))
+    app.run(host='127.0.0.1', port=port,
+            debug=os.environ.get('FLASK_DEBUG', '').lower() in ('1', 'true'))
