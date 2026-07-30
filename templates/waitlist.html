@@ -693,7 +693,11 @@
         </span>
         <span>
           <strong>Check your inbox.</strong>
-          Click the verification link we sent to finish joining the list.
+          Your request is still pending. Click the verification link we sent
+          to finish joining the list.
+          <button type="button" class="wl-resend-btn" onclick="retryWaitlistEmail()">
+            Didn&rsquo;t get it? Try again
+          </button>
         </span>
       </div>
 
@@ -726,6 +730,26 @@
       if (codeForm) codeForm.style.display = 'none';
       if (error) error.style.display = 'none';
       if (success) success.style.display = 'flex';
+    }
+
+    function retryWaitlistEmail() {
+      var detailsForm = document.getElementById('details-form');
+      var codeForm = document.getElementById('code-form');
+      var success = document.getElementById('hero-success');
+      var submitButton = document.getElementById('hero-submit');
+      var codeButton = document.getElementById('code-submit');
+
+      if (success) success.style.display = 'none';
+      if (codeForm) codeForm.style.display = 'none';
+      if (detailsForm) detailsForm.style.display = '';
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send verification email again';
+      }
+      if (codeButton) {
+        codeButton.disabled = false;
+        codeButton.textContent = 'Verify phone';
+      }
     }
 
     function setWaitlistError(message) {
@@ -836,7 +860,6 @@
         }
 
         if (data.skip_verification) {
-          localStorage.setItem('hoopsline_verification_sent', 'true');
           setWaitlistSuccess();
           return;
         }
@@ -889,7 +912,6 @@
           throw new Error(data.error || 'Verification failed. Try again.');
         }
 
-        localStorage.setItem('hoopsline_verification_sent', 'true');
         setWaitlistSuccess();
       } catch (requestError) {
         setWaitlistError(requestError.message || 'Something went wrong. Please try again.');
@@ -922,11 +944,6 @@
       }
     });
 
-    window.addEventListener('DOMContentLoaded', function() {
-      if (localStorage.getItem('hoopsline_verification_sent')) {
-        setWaitlistSuccess();
-      }
-    });
   </script>
 </body>
 </html>
